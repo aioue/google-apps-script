@@ -4,6 +4,11 @@
  */
 function listAllUsers(domainName) {
   var pageToken, page;
+
+  // get users domain (e.g. company.com)
+  var email = Session.getActiveUser().getEmail();
+  domainName = email.replace(/.*@/, "");
+
   do {
     page = AdminDirectory.Users.list({
       domain: domainName,
@@ -60,7 +65,7 @@ function toISODate(date) { return date.getFullYear()+'-'+pad(date.getMonth()+1)+
 function pad(number) { return number < 10 ? '0' + number : number; }
 
 /**
- * email a user an HTML email
+ * email a user an HTML email from a no reply email address
  * input emailAddress = "foo@bar.com"
  */
 function emailUser(emailAddress) {
